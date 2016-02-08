@@ -14,9 +14,13 @@ apply plugin: 'war'
 group 'com.avvero.example'
 version '1.0-SNAPSHOT'
 
-
 sourceCompatibility = 1.8
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.codehaus.groovy:groovy-all:2.4.4'
+    compile("org.springframework.boot:spring-boot-starter-web")
 }
