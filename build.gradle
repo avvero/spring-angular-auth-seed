@@ -23,4 +23,5 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.4'
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
 }

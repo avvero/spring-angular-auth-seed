@@ -1,0 +1,14 @@
+<form ng-if="visible"
+      name="loginForm"
+      action="sink.html" target="sink" method="post"
+      ng-controller="LoginController"
+      ng-submit="login(credentials)"
+      novalidate form-autofill-fix>
+    <label for="username">Username:</label>
+    <input type="text" id="username"
+           ng-model="credentials.username">
+    <label for="password">Password:</label>
+    <input type="password" id="password"
+           ng-model="credentials.password">
+    <button type="submit">Login</button>
+</form>

@@ -1,17 +1,15 @@
 package com.avvero.web;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by fxdev-belyaev-ay on 08.02.2016.
  */
-@Controller
+@RestController
 public class HomeController {
 
     @RequestMapping("/hello")
-    @ResponseBody
     public String home() {
         return "Hello World!";
     }
