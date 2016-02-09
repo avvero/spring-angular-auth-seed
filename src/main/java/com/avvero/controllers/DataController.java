@@ -1,4 +1,4 @@
-package com.avvero.web.api;
+package com.avvero.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

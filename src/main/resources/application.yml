@@ -3,6 +3,7 @@ social:
     oauth:
       clientId: 4623869
       clientSecret: WEPBnzOvUEJHZlWnF5z3
-      redirectURI: http://localhost:8080/oauth2/authorize?provider=vk
+      redirectURI: http://localhost:8080/oauth2/finish?provider=vk
       scope: email
+      display: popup
       userInfoURL: https://api.vk.com/method/users.get?v=5.27&fields=sex,photo_200,email&access_token=%s

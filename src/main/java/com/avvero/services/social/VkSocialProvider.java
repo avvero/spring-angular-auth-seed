@@ -1,7 +1,7 @@
 package com.avvero.services.social;
 
 import com.avvero.domain.User;
-import com.avvero.services.social.ASocialProvider;
+import com.avvero.services.social.client.vk.OAuth2FlowVkBuilder;
 import org.glassfish.jersey.client.oauth2.ClientIdentifier;
 import org.glassfish.jersey.client.oauth2.OAuth2CodeGrantFlow;
 import org.glassfish.jersey.client.oauth2.TokenResult;
@@ -29,13 +29,14 @@ public class VkSocialProvider extends ASocialProvider {
                 env.getRequiredProperty("social.vk.oauth.clientSecret"));
         OAuth2CodeGrantFlow flow = OAuth2FlowVkBuilder.getVkAuthorizationBuilder(clientIdentifier,
                 env.getRequiredProperty("social.vk.oauth.redirectURI"))
-                .scope(env.getRequiredProperty("social.vk.oauth.scope")).build();
+                .scope(env.getRequiredProperty("social.vk.oauth.scope"))
+                .property(OAuth2CodeGrantFlow.Phase.AUTHORIZATION, "display", env.getRequiredProperty("social.vk.oauth.display")).build();
         return flow;
     }
 
     @Override
     public String getUserInfoURL() {
-        return env.getRequiredProperty("social.vk.userInfoURL");
+        return env.getRequiredProperty("social.vk.oauth.userInfoURL");
     }
 
     /**
