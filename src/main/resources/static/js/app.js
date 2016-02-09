@@ -47,7 +47,7 @@ angular.module("app").config(function ($routeProvider, $stateProvider, $urlRoute
     ]);
 
 })
-angular.module("app").run(function ($rootScope, AuthService, AUTH_EVENTS) {
+angular.module("app").run(function ($rootScope, $http, AuthService, AUTH_EVENTS, Session) {
     $rootScope.$on('$stateChangeStart', function (event, next) {
         var authorizedRoles = next.data.authorizedRoles;
         if (!AuthService.isAuthorized(authorizedRoles)) {
@@ -61,6 +61,18 @@ angular.module("app").run(function ($rootScope, AuthService, AUTH_EVENTS) {
             }
         }
     });
+
+    $http({
+        method: 'GET',
+        url: 'profile',
+        headers: {'Content-Type': 'application/json;charset=UTF-8'}
+    })
+        .success(function (user) {
+            Session.create(null, user.id, null);
+        })
+        .error(function (data) {
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        });
 })
 
 angular.module("app").controller('mainController', function ($scope, page) {

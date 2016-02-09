@@ -22,6 +22,11 @@ repositories {
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.4'
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-security")
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-security"
+
+    compile 'org.glassfish.jersey.security:oauth2-client:2.13'
+    compile 'org.apache.httpcomponents:httpclient:4.3.3'
+    compile 'org.json:json:20151123'
+
 }
