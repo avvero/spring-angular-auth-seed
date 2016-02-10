@@ -3,12 +3,9 @@ package com.avvero.controllers.auth;
 import com.avvero.domain.User;
 import com.avvero.services.social.ASocialProvider;
 import com.avvero.services.social.SocialProviderFactory;
-import groovy.json.JsonBuilder;
 import javafx.util.Pair;
 import org.glassfish.jersey.client.oauth2.TokenResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.Map;
 
 /**
  * Контроллер авторизациий

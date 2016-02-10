@@ -1,5 +1,4 @@
-function welcomeController($scope, page, context, $stateParams) {
-    $scope.markers = context.markers
+function welcomeController($scope, page, $stateParams) {
     page.setTitle("Welcome")
 }
 

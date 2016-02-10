@@ -15,6 +15,7 @@ angular.module("app").constant('AUTH_EVENTS', {
     notAuthorized: 'auth-not-authorized'
 })
 angular.module("app").constant('USER_ROLES', {
+    ANONYMOUS: 'ANONYMOUS',
     ALL: '*',
     USER: 'USER'
 })
@@ -30,8 +31,20 @@ angular.module("app").config(function ($routeProvider, $stateProvider, $urlRoute
             views: {
                 "single": {
                     templateUrl: 'view/welcome.html',
-                    controller: welcomeController,
-                    resolve: welcomeController.resolve
+                    controller: welcomeController
+                }
+            },
+            data: {
+                authorizedRoles: [USER_ROLES.ANONYMOUS]
+            }
+        })
+
+        .state('authed', {
+            url: "/authed",
+            views: {
+                "single": {
+                    templateUrl: 'view/welcome.html',
+                    controller: welcomeController
                 }
             },
             data: {
@@ -47,32 +60,36 @@ angular.module("app").config(function ($routeProvider, $stateProvider, $urlRoute
     ]);
 
 })
-angular.module("app").run(function ($rootScope, $http, AuthService, AUTH_EVENTS, Session) {
+angular.module("app").run(function ($rootScope, $http, AuthService, AUTH_EVENTS, USER_ROLES) {
     $rootScope.$on('$stateChangeStart', function (event, next) {
         var authorizedRoles = next.data.authorizedRoles;
-        if (!AuthService.isAuthorized(authorizedRoles)) {
-            event.preventDefault();
-            if (AuthService.isAuthenticated()) {
-                // user is not allowed
-                $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-            } else {
-                // user is not logged in
-                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        if (authorizedRoles.indexOf(USER_ROLES.ANONYMOUS) !== -1) {
+            // allow
+        } else {
+            if (!AuthService.isAuthorized(authorizedRoles)) {
+                event.preventDefault();
+                if (AuthService.isAuthenticated()) {
+                    // user is not allowed
+                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                } else {
+                    // user is not logged in
+                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+                }
             }
         }
     });
 
-    $http({
-        method: 'GET',
-        url: 'profile',
-        headers: {'Content-Type': 'application/json;charset=UTF-8'}
-    })
-        .success(function (user) {
-            Session.create(null, user.id, null);
-        })
-        .error(function (data) {
-            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-        });
+    //$http({
+    //    method: 'GET',
+    //    url: 'profile',
+    //    headers: {'Content-Type': 'application/json;charset=UTF-8'}
+    //})
+    //    .success(function (user) {
+    //        Session.create(null, user.id, null);
+    //    })
+    //    .error(function (data) {
+    //        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+    //    });
 })
 
 angular.module("app").controller('mainController', function ($scope, page, $http, $window, AUTH_EVENTS) {
